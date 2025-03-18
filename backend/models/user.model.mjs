@@ -6,9 +6,12 @@ const userSchema = new mongoose.Schema({
   profiles: {
     fullName: {type: String, default: "" },
     email: {type: String, default: "" },
-    gender: {type: String, enum: ["Male", "Female"]},
+    gender: {type: String, enum: ["Male", "Female"], default: null },
     dob: {type: String, default:null },
   }
+}, {
+  versionKey: false,
+  timestamps: true,
 });
 
 const User = mongoose.model("User", userSchema);
