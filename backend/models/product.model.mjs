@@ -1,31 +1,50 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema({
-  title: { type: String, required: true }, 
-  description: { type: String, required: true }, 
-  price: { type: Number, required: true }, 
-  mrp: { type: Number, required: true }, 
-  discount: { type: Number, required: true }, 
-  rating: { type: Number, default: 0 }, 
-  totalRatings: { type: Number, default: 0 }, 
-  images: [{ type: String }], 
-  availableSizes: [
+const ProductSchema = new mongoose.Schema({
+  url: { type: String, required: true },
+  product_id: { type: String, required: true, unique: true },
+  title: { type: String, required: true },
+  product_description: { type: String, required: true },
+  rating: { type: Number, default: 0 },
+  ratings_count: { type: Number, default: 0 },
+  initial_price: { type: String, required: true },
+  discount: { type: Number, required: true },
+  final_price: { type: String, required: true },
+  currency: { type: String, default: "INR" },
+  images: { type: [String], required: true },
+  delivery_options: { type: [String], required: true },
+  product_details: {
+    description: { type: String, required: true },
+    material_and_care: { type: String, required: true },
+    size_and_fit: { type: String, required: true },
+  },
+  product_specifications: [
     {
-      size: { type: String, enum: ["XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL", "5XL"] },
-      price: { type: Number },
-      stock: { type: Number, default: 0 },
-    }
+      specification_name: { type: String, required: true },
+      specification_value: { type: String, required: true },
+    },
   ],
-  colors: [{ type: String, required: true }],
-  material: { type: String }, 
-  fit: { type: String }, 
-  length: { type: String }, 
-  mainTrend: { type: String },
-  neck: { type: String },
-  occasion: { type: String }, 
-  careInstructions: { type: String }, 
-}, { timestamps: true });
+  sizes: [
+    {
+      size: { type: String, required: true },
+      value: { type: String, required: true },
+      value_name: { type: String, required: true },
+    },
+  ],
+  best_offer: {
+    applicable_on: { type: String, required: true },
+    best_price: { type: String, required: true },
+    coupon_code: { type: String, required: true },
+    coupon_discount: { type: String, required: true },
+  },
+  more_offers: [
+    {
+      offer_name: { type: String, required: true },
+      offer_value: { type: String, required: true },
+    },
+  ],
+});
 
-const Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model("Product", ProductSchema);
 
 export default Product;
