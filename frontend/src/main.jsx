@@ -12,6 +12,7 @@ import {
   Home,
   Orders,
   Overview,
+  ProductDetails,
   Profile,
   SavedCards,
   Wishlist,
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
       { path: "/", element: <Home /> },
       { path: "/bag", element: <Bag /> },
       { path: "/wishlist", element: <Wishlist /> },
+      { path: "/product/:productId", element:< ProductDetails /> },
       {
         path: "/profile",
         element: <Profile />,

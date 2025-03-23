@@ -10,7 +10,7 @@ import Overview from "./profile/Overview";
 import SavedCards from "./profile/SavedCards";
 import Coupons from "./profile/Coupons";
 import Addresses from "./profile/Addresses";
-
+import ProductDetails from "./ProductDetails";
 export {
-  Home, Bag, ContactUs, ErrorPage, GiftCard, Profile, Wishlist, Orders, Overview, SavedCards, Coupons, Addresses
+  Home, Bag, ContactUs, ErrorPage, GiftCard, Profile, Wishlist, Orders, Overview, SavedCards, Coupons, Addresses, ProductDetails
 };
