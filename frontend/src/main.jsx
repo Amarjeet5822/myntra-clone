@@ -7,6 +7,8 @@ import { store } from "./store/store.js";
 import {
   Addresses,
   Bag,
+  CheckoutAddress,
+  CheckoutAddressPayment,
   Coupons,
   ErrorPage,
   Home,
@@ -17,6 +19,7 @@ import {
   SavedCards,
   Wishlist,
 } from "./pages/index.js";
+
 
 const router = createBrowserRouter([
   {
@@ -29,7 +32,14 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Home /> },
-      { path: "/bag", element: <Bag /> },
+      { 
+        path: "/bag", 
+        element: <Bag />,
+        children:[
+          { path:"address", element: <CheckoutAddress />},
+          { path:"payment", element: <CheckoutAddressPayment />}
+        ],
+      },
       { path: "/wishlist", element: <Wishlist /> },
       { path: "/product/:productId", element:< ProductDetails /> },
       {
@@ -40,7 +50,7 @@ const router = createBrowserRouter([
           { path: "orders", element: <Orders /> },
           { path: "coupons", element: <Coupons /> },
           { path: "saved-cards", element: <SavedCards /> },
-          { path: "addresses", element: <Addresses /> },
+          { path: "addresses", element: <Addresses /> }
         ],
       },
     ],

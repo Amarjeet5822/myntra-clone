@@ -1,5 +1,5 @@
 import Home from "./Home";
-import Bag from "./Bag";
+import Bag from "./bags/Bag";
 import ContactUs from "./ContactUs";
 import ErrorPage from "./ErrorPage";
 import GiftCard from "./GiftCard";
@@ -11,6 +11,9 @@ import SavedCards from "./profile/SavedCards";
 import Coupons from "./profile/Coupons";
 import Addresses from "./profile/Addresses";
 import ProductDetails from "./ProductDetails";
+import CheckoutAddressPayment from "./bags/CheckoutAddressPayment";
+import CheckoutAddress from "./bags/CheckoutAddress";
 export {
-  Home, Bag, ContactUs, ErrorPage, GiftCard, Profile, Wishlist, Orders, Overview, SavedCards, Coupons, Addresses, ProductDetails
+  Home, Bag, ContactUs, ErrorPage, GiftCard, Profile, Wishlist, Orders, Overview, SavedCards, Coupons, Addresses, ProductDetails,
+  CheckoutAddressPayment, CheckoutAddress,
 };

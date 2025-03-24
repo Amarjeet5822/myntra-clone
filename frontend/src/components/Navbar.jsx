@@ -4,7 +4,7 @@ import { IoMdHeartEmpty } from "react-icons/io";
 
 export default function Navbar() {
   return (
-    <nav className=" sticky top-0 z-0 bg-white ">
+    <nav className=" sticky top-0 z-50 bg-white w-full">
       <div className="min-w-[300px] max-w-[2500px] mx-auto h-[80px] flex justify-center items-center gap-5 text-xs lg:text-sm px-5 shadow-md">
         <div className="w-1/2 flex pr-1 ">
           <div className="w-[20%] flex justify-center items-center">

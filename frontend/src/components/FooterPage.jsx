@@ -1,6 +1,7 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function FooterPage() {
+
   return (
     <div className="max-w-5xl mx-auto  text-[#696B79]">
       <div className="max-w-5xl flex flex-col mt-14">
