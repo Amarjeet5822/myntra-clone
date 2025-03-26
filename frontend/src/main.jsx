@@ -12,14 +12,18 @@ import {
   Coupons,
   ErrorPage,
   Home,
+  MenCasualShirts,
+  MenFormalShirts,
+  MenSweatShirts,
+  MenTshirts,
   Orders,
   Overview,
   ProductDetails,
+  ProductPage,
   Profile,
   SavedCards,
   Wishlist,
 } from "./pages/index.js";
-
 
 const router = createBrowserRouter([
   {
@@ -32,16 +36,21 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Home /> },
-      { 
-        path: "/bag", 
+      { path: "/product", element: <ProductPage /> },
+      { path: "/product/men-tshirts", element: <MenTshirts /> },
+      { path: "/product/men-casual-shirts", element: <MenCasualShirts /> },
+      { path: "/product/men-formal-shirts", element: <MenFormalShirts /> },
+      { path: "/product/men-sweat-shirts", element: <MenSweatShirts /> },
+      { path: "/product/:productId", element: <ProductDetails /> },
+      {
+        path: "/bag",
         element: <Bag />,
-        children:[
-          { path:"address", element: <CheckoutAddress />},
-          { path:"payment", element: <CheckoutAddressPayment />}
+        children: [
+          { path: "address", element: <CheckoutAddress /> },
+          { path: "payment", element: <CheckoutAddressPayment /> },
         ],
       },
       { path: "/wishlist", element: <Wishlist /> },
-      { path: "/product/:productId", element:< ProductDetails /> },
       {
         path: "/profile",
         element: <Profile />,
@@ -50,7 +59,7 @@ const router = createBrowserRouter([
           { path: "orders", element: <Orders /> },
           { path: "coupons", element: <Coupons /> },
           { path: "saved-cards", element: <SavedCards /> },
-          { path: "addresses", element: <Addresses /> }
+          { path: "addresses", element: <Addresses /> },
         ],
       },
     ],

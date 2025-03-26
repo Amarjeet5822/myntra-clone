@@ -125,7 +125,7 @@ function FooterPage() {
               {" "}
               POPULAR SEARCHES{" "}
             </p>
-            <div class="flex-grow border-t border-gray-200"></div>
+            <div className="flex-grow border-t border-gray-200"></div>
           </div>
           <p className="leading-relaxed">
             Punjabi Suits | Anarkali | Lingerie | Rakhi 2020 | Wedges | Jacket

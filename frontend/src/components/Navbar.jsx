@@ -1,24 +1,43 @@
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { IoMdHeartEmpty } from "react-icons/io";
+import { useState } from "react";
+import { MenHover } from "../pages/index";
 
 export default function Navbar() {
+  const [isMen, setIsMen] = useState(null);
   return (
     <nav className=" sticky top-0 z-50 bg-white w-full">
       <div className="min-w-[300px] max-w-[2500px] mx-auto h-[80px] flex justify-center items-center gap-5 text-xs lg:text-sm px-5 shadow-md">
-        <div className="w-1/2 flex pr-1 ">
-          <div className="w-[20%] flex justify-center items-center">
+        <div className="w-1/2 flex pr-1 h-full justify-between items-center">
+          <div className="w-[20%] flex justify-center items-center h-full">
             <Link to="/">
-              <div class="w-[53px] h-[36px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-462px_0px] bg-no-repeat cursor-pointer"></div>
+              <div className="w-[53px] h-[36px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-462px_0px] bg-no-repeat cursor-pointer"></div>
             </Link>
           </div>
-          <div className="font-medium flex justify-between items-center w-[80%]">
-            <div>MEN</div>
-            <div>WOMEN</div>
-            <div>KIDS</div>
-            <div>HOME & LIVING</div>
-            <div>BEAUTY</div>
-            <div>
+          <div className="font-medium flex justify-items-start items-center w-[80%] h-full ">
+            <div
+              className="relative z-10 px-5 h-full flex justify-center items-center hover:border-b-4 hover:pb-[-4px]  hover:border-amber-400 "
+              onMouseEnter={() => setIsMen(true)}
+              onMouseLeave={() => setIsMen(false)}
+            >
+              MEN
+              {isMen && <MenHover />}
+            </div>
+
+            <div className="relative px-5 h-full flex justify-center items-center">
+              WOMEN
+            </div>
+            <div className="relative px-5 h-full flex justify-center items-center">
+              KIDS
+            </div>
+            <div className="relative w-[132px] h-full flex justify-center items-center">
+              HOME & LIVING
+            </div>
+            <div className="relative px-5 h-full flex justify-center items-center">
+              BEAUTY
+            </div>
+            <div className="relative px-5 h-full flex justify-center items-center">
               STUDIO <sup className="text-rose-500 lg:text-[11px] ">NEW</sup>
             </div>
           </div>
@@ -38,14 +57,14 @@ export default function Navbar() {
           </div>
           <div className="w=[30%]  flex gap-3 items-center pl-2 ">
             <div className="flex flex-col justify-center items-center">
-              <div class="w-[24px] h-[24px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-298px_-56px] bg-no-repeat cursor-pointer items-center justify-center"></div>
+              <div className="w-[24px] h-[24px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-298px_-56px] bg-no-repeat cursor-pointer items-center justify-center"></div>
               <div>
                 <Link to="/profile">Profile</Link>
               </div>
             </div>
             <div className="flex flex-col justify-center items-center">
               <Link to="/cart">
-                <div class=" cursor-pointer text-xl flex justify-center items-center">
+                <div className=" cursor-pointer text-xl flex justify-center items-center">
                   <IoMdHeartEmpty />
                 </div>
                 <div>Wishlist</div>
@@ -53,7 +72,7 @@ export default function Navbar() {
             </div>
             <div>
               <Link to="/bag">
-                <div class="w-[22px] h-[22px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-341px_-56px] bg-no-repeat cursor-pointer"></div>
+                <div className="w-[22px] h-[22px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-341px_-56px] bg-no-repeat cursor-pointer"></div>
                 <p>Bag</p>
               </Link>
             </div>

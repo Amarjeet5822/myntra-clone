@@ -8,6 +8,7 @@ import Navbar from "./Navbar";
 import NavbarBag from "./NavbarBag";
 import FooterBank from "./FooterBank";
 
+
 export {
   LandingImage, 
   SingleImage, 

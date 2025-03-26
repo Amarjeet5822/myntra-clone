@@ -5,7 +5,7 @@ function LandingImage(props) {
   return (
     <div className="max-w-full mx-auto flex justify-center items-center mb-[-8px]">
       {images.map((item, index) => (
-        <div className="w-[220px] h-[287px] overflow-hidden ">
+        <div key={index} className="w-[220px] h-[287px] overflow-hidden ">
           <img
             className="w-full "
             src={`${item}`}

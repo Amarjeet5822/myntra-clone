@@ -10,7 +10,7 @@ function App() {
         {location.pathname!=="/bag" && location.pathname!=="/bag/address" && location.pathname!=="/bag/payment" ? <Navbar /> : <NavbarBag /> }
       </div>
       <div className="max-w-[2500px] mx-auto bg-gray-50">
-        <main >
+        <main className="max-w-full mx-auto bg-gray-50" >
           <Outlet />
         </main>
         <div className="max-w-full bg-gray-100 mx-auto">

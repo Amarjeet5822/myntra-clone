@@ -13,7 +13,14 @@ import Addresses from "./profile/Addresses";
 import ProductDetails from "./ProductDetails";
 import CheckoutAddressPayment from "./bags/CheckoutAddressPayment";
 import CheckoutAddress from "./bags/CheckoutAddress";
+import MenHover from "./DropDownHover/MenHover";
+import MenCasualShirts from "./Products/MenCasualShirts";
+import MenFormalShirts from "./Products/MenFormalShirts";
+import MenSweatShirts from "./Products/MenSweatShirts";
+import MenTshirts from "./Products/MenTshirts";
+import ProductPage from "./Products/ProductPage";
+
 export {
   Home, Bag, ContactUs, ErrorPage, GiftCard, Profile, Wishlist, Orders, Overview, SavedCards, Coupons, Addresses, ProductDetails,
-  CheckoutAddressPayment, CheckoutAddress,
+  CheckoutAddressPayment, CheckoutAddress, MenHover, MenCasualShirts, MenFormalShirts, MenSweatShirts, MenTshirts, ProductPage
 };

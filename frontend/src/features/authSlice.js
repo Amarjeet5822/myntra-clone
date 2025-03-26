@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const bc_url = "https://notesapp-bc.onrender.com"
+import { api } from "../utils/backendApi";
 // First, create the thunk ( Login User)
 export const loginUser = createAsyncThunk(
   "authUser/loginUser",
   async ({ email, pass }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${bc_url}/users/login`,
+        `${api}/users/login`,
         { email, pass },
         { withCredentials: true }
       );
@@ -25,7 +24,7 @@ export const registerUser = createAsyncThunk(
   async ({email, pass, name},{ rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${bc_url}/users/register`,
+        `${api}/users/register`,
         { name, email, pass },
         { withCredentials: true, }
       );
@@ -41,7 +40,7 @@ export const logoutUser = createAsyncThunk(
   async ( _,{ rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${bc_url}/users/logout`,
+        `${api}/users/logout`,
         {},
         { withCredentials: true, }
       );
@@ -57,7 +56,7 @@ export const deleteUser = createAsyncThunk(
   async ( _,{ rejectWithValue }) => {
     try {
       const response = await axios.delete(
-        `${bc_url}/users`,
+        `${api}/users`,
         { withCredentials: true, }
       );
       return response.data;

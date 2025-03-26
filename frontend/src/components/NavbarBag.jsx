@@ -7,7 +7,7 @@ function NavbarBag() {
       <div className=" max-w-screen h-full flex justify-between itmes-center px-16">
         <div className="flex justify-center items-center">
           <NavLink to="/">
-            <div class="w-[53px] h-[36px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-462px_0px] bg-no-repeat cursor-pointer"></div>
+            <div className="w-[53px] h-[36px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-462px_0px] bg-no-repeat cursor-pointer"></div>
           </NavLink>
         </div>
         <div className="flex flex-row  justify-center items-center ">
