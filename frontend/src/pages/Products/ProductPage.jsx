@@ -38,8 +38,8 @@ const ProductPage = () => {
     }));
   };
   const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`)
-  }
+    navigate(`/product/${productId}`);
+  };
   if (isLoading) {
     return (
       <div className="text-2xl flex min-h-96 justify-center items-center font-bold">
@@ -115,14 +115,25 @@ const ProductPage = () => {
       <div className="w-full sm:w-[75%] md:w-[80%] lg:w-[85%] p-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
           {displayedProducts?.map((item) => (
-            <div key={item.product_id} className=" p-4">
-              <img 
-              src={item.images[0]} 
-              alt={item.title} 
-              className="w-full" 
-              onClick={() => handleProductClick(item.product_id) }/>
-              <h3>{item.title}</h3>
-              <p>Rs. {item.initial_price}</p>
+            <div key={item.product_id} className=" p-4 cursor-pointer">
+              <img
+                src={item.images[0]}
+                alt={item.title}
+                className="w-full"
+                onClick={() => handleProductClick(item.product_id)}
+              />
+              <div className="p-4 flex flex-col gap-1 text-gray-700">
+                <strong>{item.title}</strong>
+                <p>{item.product_description.slice(0,25)}...</p>
+                <div className="flex justify-items-start gap-1 items-center">
+                <p ><strong>Rs. {item.final_price}</strong></p>
+                <div className="flex gap-0.5 text-xs">
+                  <p className="line-through pr-1">{item.initial_price}</p>
+                  <span className="text-orange-400">({item.discount }% OFF)</span>
+                </div>
+                </div>
+                 
+              </div>
             </div>
           ))}
         </div>

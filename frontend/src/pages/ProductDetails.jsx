@@ -61,7 +61,7 @@ const ProductDetails = () => {
       {/* Main Product Section */}
       <div className="w-full flex flex-col md:flex-row gap-5 px-5 py-5 border-2 border-gray-200 my-5">
         {/* Product Image Section */}
-        <div className="w-full md:w-[60%]  ">
+        <div className="w-full md:w-[50%] lg:w-[60%]  ">
           <div className="flex flex-wrap justify-items-start items-center gap-5 ">
             {item.images.map((product, idx) => (
               <div
@@ -79,7 +79,7 @@ const ProductDetails = () => {
         </div>
 
         {/* Product Content Section */}
-        <div className="w-full md:w-[40%] pl-3 bg-amber-100">
+        <div className="w-full md:w-[50%] lg:w-[40%] pl-3 bg-amber-100">
           <div className="w-full">
             {/* Brand and Name */}
             <h1 className="text-xl font-semibold text-gray-800">
@@ -187,10 +187,55 @@ const ProductDetails = () => {
                 {pincode && (
                   <div className="flex items-center gap-1 text-sm text-gray-700">
                     <FaCheckCircle className="text-green-500" />
-                    <span>Get it by Mon, Mar 31</span>
                   </div>
                 )}
               </div>
+            </div>
+            <div className="text-gray-800 font-bold py-5 flex flex-col gap-3">
+              {item.delivery_options.map((ele) => {
+                return <p>{ele}</p>;
+              })}
+            </div>
+            <p className="">100% Original Products</p>
+            <div className="mt-10 w-full">
+              <p className="font-bold">BEST OFFERS </p>
+
+              <p className="my-2 font-medium">
+                Best Price: {item.best_offer.best_price}
+              </p>
+
+              <li>Applicable on: {item.best_offer.applicable_on}</li>
+              <li>
+                Coupon code: <strong>{item.best_offer.coupon_code}</strong>
+              </li>
+              <li>Coupon Discount: {item.best_offer.coupon_discount}</li>
+            </div>
+            <p className="text-sm font-medium my-2 text-[#f30889]">
+              View Eligible Products
+            </p>
+            <div className="flex flex-col gap-3">
+              {item.more_offers.map((ele, idx) => (
+                <div key={idx}>
+                  <strong>{ele.offer_name}</strong>
+                  <p className="font-normal">
+                    <li>{ele.offer_value}</li>
+                  </p>
+
+                  <p className="text-sm font-medium my-2 text-[#f30889]">
+                    Terms & Condition
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="text-sm font-medium mb-2 text-[#f30889]">View Plan</p>
+            <div className="border-1 text-gray-200 my-5"> </div>
+            <p className="font-medium py-2">PRODUCT DETAILS </p>
+            <div>
+              {item.product_details.description.split(",").map((ele, idx) => (
+                <div>
+                  <p key={idx}>{ele.trim()}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
