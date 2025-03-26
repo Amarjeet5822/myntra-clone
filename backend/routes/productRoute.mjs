@@ -1,9 +1,10 @@
 import express from "express";
-import { getProducts, getSingleProduct } from "../controllers/productController.mjs";
+import { getProducts, getProductById, getFilteredProducts } from "../controllers/productController.mjs";
 
 const productRoute = express.Router();
-
+//
 productRoute.get("/", getProducts )
-productRoute.get("/:productId", getSingleProduct )
+productRoute.get("/", getFilteredProducts)
+productRoute.get("/:productId", getProductById )
 
 export default productRoute;
