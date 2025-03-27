@@ -4,7 +4,7 @@ import { IoHeartOutline } from "react-icons/io5"; // For the wishlist icon
 import { MdLocationOn } from "react-icons/md"; // For the delivery pincode icon
 import { FaCheckCircle } from "react-icons/fa"; // For the checkmark icon
 import { useParams } from "react-router-dom";
-import { useGetProductByIdQuery } from "../features/productApiSlice";
+import { useGetProductByIdQuery } from "../features/CreateApi/productApiSlice";
 
 const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState(null);
@@ -21,14 +21,14 @@ const ProductDetails = () => {
   if (isLoading) {
     return (
       <div className="text-2xl flex justify-center items-center font-bold">
-        <p className="text-center font-bold">Loading products...</p>;
+        <p className="text-center font-bold">Loading Products...</p>;
       </div>
     );
   }
   if (error) {
     return (
       <div className="text-2xl flex justify-center items-center font-bold">
-        <p className="text-center">Error fetching products</p>
+        <p className="text-center">Error fetching Products</p>
       </div>
     );
   }
@@ -79,7 +79,7 @@ const ProductDetails = () => {
         </div>
 
         {/* Product Content Section */}
-        <div className="w-full md:w-[50%] lg:w-[40%] pl-3 bg-amber-100">
+        <div className="w-full md:w-[50%] lg:w-[40%] pl-3 ">
           <div className="w-full">
             {/* Brand and Name */}
             <h1 className="text-xl font-semibold text-gray-800">

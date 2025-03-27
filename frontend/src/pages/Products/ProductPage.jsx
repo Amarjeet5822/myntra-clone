@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import {
-  useGetFilteredProductsQuery,
-  useGetProductsQuery,
-} from "../../features/productApiSlice";
+import { useGetProductsQuery } from "../../features/CreateApi/productApiSlice";
 import { useNavigate } from "react-router-dom";
+import { useGetFilteredProductsQuery } from "../../features/CreateApi/filterApiSlice";
 
 const ProductPage = () => {
   const [filters, setFilters] = useState({
@@ -85,18 +83,47 @@ const ProductPage = () => {
 
         {/* Color Filter */}
         <h3 className="mt-4 font-medium">Color</h3>
-        <button
-          onClick={() => applyFilter("color", "black")}
-          className="bg-black text-white px-4 py-2 m-1"
-        >
-          Black
-        </button>
-        <button
-          onClick={() => applyFilter("color", "blue")}
-          className="bg-blue-500 text-white px-4 py-2 m-1"
-        >
-          Blue
-        </button>
+
+        <div className="flex items-center gap-2 ">
+          <input
+            onClick={() => applyFilter("color", "black")}
+            type="checkbox"
+            name="Black"
+            id="black"
+          />
+          <p className="h-3 w-3 rounded-full bg-black"></p>
+          <p>Black</p>
+        </div>
+        <div className="flex items-center gap-2 ">
+          <input
+            onClick={() => applyFilter("color", "blue")}
+            type="checkbox"
+            name="blue"
+            id="blue"
+          />
+          <p className="h-3 w-3 rounded-full bg-blue-600"></p>
+          <p>Blue</p>
+        </div>
+        <div className="flex items-center gap-2 ">
+          <input
+            onClick={() => applyFilter("color", "white")}
+            type="checkbox"
+            name="white"
+            id="white"
+          />
+          <p className="h-3 w-3 rounded-full bg-white border-2 text-gray-300"></p>
+          <p>White</p>
+        </div>
+        <div className="flex items-center gap-2 ">
+          <input
+            onClick={() => applyFilter("color", "red")}
+            type="checkbox"
+            name="red"
+            id="red"
+          />
+          <p className="h-3 w-3 rounded-full bg-red-600"></p>
+          <p>Red</p>
+        </div>
 
         {/* Price Filter */}
         <h3 className="mt-4 font-medium">Price</h3>
@@ -124,15 +151,18 @@ const ProductPage = () => {
               />
               <div className="p-4 flex flex-col gap-1 text-gray-700">
                 <strong>{item.title}</strong>
-                <p>{item.product_description.slice(0,25)}...</p>
+                <p>{item.product_description.slice(0, 25)}...</p>
                 <div className="flex justify-items-start gap-1 items-center">
-                <p ><strong>Rs. {item.final_price}</strong></p>
-                <div className="flex gap-0.5 text-xs">
-                  <p className="line-through pr-1">{item.initial_price}</p>
-                  <span className="text-orange-400">({item.discount }% OFF)</span>
+                  <p>
+                    <strong>Rs. {item.final_price}</strong>
+                  </p>
+                  <div className="flex gap-0.5 text-xs">
+                    <p className="line-through pr-1">{item.initial_price}</p>
+                    <span className="text-orange-400">
+                      ({item.discount}% OFF)
+                    </span>
+                  </div>
                 </div>
-                </div>
-                 
               </div>
             </div>
           ))}

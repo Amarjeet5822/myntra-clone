@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { IoMdHeartEmpty } from "react-icons/io";
 import { useState } from "react";
-import { MenHover } from "../pages/index";
+import { AccountNavSignin, MenHover } from "../pages/index";
 
 export default function Navbar() {
   const [isMen, setIsMen] = useState(null);
+  const [isAccount, setIsAccount] = useState(null);
+
   return (
     <nav className=" sticky top-0 z-50 bg-white w-full">
       <div className="min-w-[300px] max-w-[2500px] mx-auto h-[80px] flex justify-center items-center gap-5 text-xs lg:text-sm px-5 shadow-md">
@@ -19,7 +21,7 @@ export default function Navbar() {
             <div
               className="relative z-10 px-5 h-full flex justify-center items-center hover:border-b-4 hover:pb-[-4px]  hover:border-amber-400 "
               onMouseEnter={() => setIsMen(true)}
-              onMouseLeave={() => setIsMen(false)}
+              onMouseLeave={() => setIsMen(null)}
             >
               MEN
               {isMen && <MenHover />}
@@ -56,10 +58,15 @@ export default function Navbar() {
             </div>
           </div>
           <div className="w=[30%]  flex gap-3 items-center pl-2 ">
-            <div className="flex flex-col justify-center items-center">
+            <div
+              onMouseEnter={() => setIsAccount(true)}
+              onMouseLeave={() => setIsAccount(null)}
+              className="flex flex-col justify-center items-center hover:border-b-4 hover:pb-[-4px]  hover:border-pink-500 "
+            >
               <div className="w-[24px] h-[24px] bg-[url('https://constant.myntassets.com/web/assets/img/MyntraWebSprite_27_01_2021.png')] bg-[length:1404px_105px] leading-[80px] bg-[-298px_-56px] bg-no-repeat cursor-pointer items-center justify-center"></div>
-              <div>
-                <Link to="/profile">Profile</Link>
+              <div className="relative ">
+                Profile
+                {isAccount && <AccountNavSignin />}
               </div>
             </div>
             <div className="flex flex-col justify-center items-center">

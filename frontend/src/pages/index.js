@@ -19,8 +19,9 @@ import MenFormalShirts from "./Products/MenFormalShirts";
 import MenSweatShirts from "./Products/MenSweatShirts";
 import MenTshirts from "./Products/MenTshirts";
 import ProductPage from "./Products/ProductPage";
+import AccountNavSignin from "./DropDownHover/AccountNavSignin";
 
 export {
   Home, Bag, ContactUs, ErrorPage, GiftCard, Profile, Wishlist, Orders, Overview, SavedCards, Coupons, Addresses, ProductDetails,
-  CheckoutAddressPayment, CheckoutAddress, MenHover, MenCasualShirts, MenFormalShirts, MenSweatShirts, MenTshirts, ProductPage
+  CheckoutAddressPayment, CheckoutAddress, MenHover, MenCasualShirts, MenFormalShirts, MenSweatShirts, MenTshirts, ProductPage, AccountNavSignin
 };
