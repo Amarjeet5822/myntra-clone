@@ -12,6 +12,7 @@ import {
   Coupons,
   ErrorPage,
   Home,
+  LoginPage,
   MenCasualShirts,
   MenFormalShirts,
   MenSweatShirts,
@@ -36,12 +37,14 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/login", element: <LoginPage /> },
+      { path: "/wishlist", element: <Wishlist /> },
       { path: "/product", element: <ProductPage /> },
+      { path: "/product/:productId", element: <ProductDetails /> },
       { path: "/product/men-tshirts", element: <MenTshirts /> },
       { path: "/product/men-casual-shirts", element: <MenCasualShirts /> },
       { path: "/product/men-formal-shirts", element: <MenFormalShirts /> },
       { path: "/product/men-sweat-shirts", element: <MenSweatShirts /> },
-      { path: "/product/:productId", element: <ProductDetails /> },
       {
         path: "/bag",
         element: <Bag />,
@@ -50,7 +53,6 @@ const router = createBrowserRouter([
           { path: "payment", element: <CheckoutAddressPayment /> },
         ],
       },
-      { path: "/wishlist", element: <Wishlist /> },
       {
         path: "/profile",
         element: <Profile />,

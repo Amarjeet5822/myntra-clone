@@ -7,7 +7,7 @@ const AccountNavSignin = () => {
       <p className="font-bold mb-1">Welcome</p>
       <p className=" mb-2 text-gray-500">To access account and manage orders</p>
       <Link
-        className="inline-block px-4 py-2 bg-pink-500 text-white no-underline rounded-md font-bold hover:bg-pink-600 cursor-pointer"
+        className="inline-block px-5 py-2 text-pink-500 no-underline font-bold cursor-pointer border border-gray-200 hover:border-red-500"
         to="/login" 
       >
         LOGIN / SIGNUP
