@@ -3,15 +3,14 @@ import axios from "axios";
 import { api } from "../utils/backendApi";
 
 // Get all the products [GET]
-export const getProducts = createAsyncThunk(
-  "product/getProducts",
+export const getBags = createAsyncThunk(
+  "bag/getBags",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${api}/api/product`, {
+      const response = await axios.get(`${api}/bag`, {
         withCredentials: true,
       });
-      return response?.data;
-
+      return response.data;
     } catch (error) {
       return rejectWithValue(
         error?.response?.data?.message || "failed to get products"
@@ -19,12 +18,34 @@ export const getProducts = createAsyncThunk(
     }
   }
 );
-// Get the product by Id [GET]
-export const getProductById = createAsyncThunk(
-  "product/getProductById",
-  async ( { productId }, { rejectWithValue }) => {
+// Add to Bag
+export const addToBag = createAsyncThunk(
+  "bag/addToBag",
+  async (item, { rejectWithValue }) => {
+    console.log("item ( addToBag ) : ", item)
     try {
-      const response = await axios.get(`${api}/api/product/${productId}`, {
+      const response = await axios.post(
+        `${api}/bag`,
+        item,
+        { withCredentials: true, 
+          headers: { "Content-Type": "application/json" },
+         }
+      );
+      // console.log("addToBag response.data : ", response.data )
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error?.response?.data?.message || "failed to add products"
+      );
+    }
+  }
+);
+// Get the product by Id [GET]
+export const deleteBagById = createAsyncThunk(
+  "bag/deleteBagById",
+  async ({ productId }, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`${api}/bag/${productId}`, {
         withCredentials: true,
       });
       return response.data;
@@ -40,59 +61,68 @@ const initialState = {
   loading: false,
   error: null,
   data: [],
-  singleData: null,
-  success: false
-}
+  message: null,
+};
 
-const productSlice = createSlice({
-  name:"product",
+const bagSlice = createSlice({
+  name: "bag",
   initialState,
   reducers: {
-    resetStatus: (state) => {
+    resetBagStatusLoading: (state) => {
       state.loading = false;
-      state.error = null;
-      state.success = false;
     },
-    clearSingleData: (state) => {
-      state.singleData = null;
-    }
+    resetBagStatusError: (state) => {
+      state.error = null;
+    },
+    resetBagStatusMessage: (state) => {
+      state.message = null;
+    },
+    
   },
   extraReducers: (builder) => {
-    // Handle Pending State 
-    const handlePending = ( ) => {
+    // Handle Pending State
+    const handlePending = (state) => {
       state.loading = true;
-      state.success = false;
+      state.message = null;
       state.error = null;
-    }
+    };
     // Handle rejected state
-    const handleRejected = (state, action ) => {
+    const handleRejected = (state, action) => {
       state.loading = false;
-      state.success = false;
+      state.message = null;
       state.error = action.payload;
-    }
-    // Get all products
+    };
+    // Get all products from Bag
     builder
-    .addCase(getProducts.pending, handlePending)
-    .addCase(getProducts.fulfilled, (state, action) => {
-      console.log("data line 77 ", action.payload)
-      state.loading = false;
-      state.success = false;
-      state.data = action.payload;
-    })
-    .addCase(getProducts.rejected, handleRejected );
-
-    // Get single product
+      .addCase(getBags.pending, handlePending)
+      .addCase(getBags.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = null;
+        state.data = action.payload;
+      })
+      .addCase(getBags.rejected, handleRejected);
+    // Add product to Bag
     builder
-    .addCase(getProductById.pending, handlePending)
-    .addCase(getProductById.fulfilled, (state, action) => {
-      state.loading = false;
-      state.success = true;
-      state.singleData = action.payload;
-    })
-    .addCase(getProductById.rejected, handleRejected);
+      .addCase(addToBag.pending, handlePending)
+      .addCase(addToBag.fulfilled, (state, action) => {
+        state.loading = false;
+        console.log("✅ Action Fulfilled Payload:", action.payload);
+        state.message = action.payload;
+        state.error = null;
+      })
+      .addCase(addToBag.rejected, handleRejected);
 
-  }
-})
+    // Delete single product
+    builder
+      .addCase(deleteBagById.pending, handlePending)
+      .addCase(deleteBagById.fulfilled, (state, action) => {
+        state.loading = false;
+        state.message = action.payload;
+        state.error = null;
+      })
+      .addCase(deleteBagById.rejected, handleRejected);
+  },
+});
 
-export const { resetStatus, clearSingleData } = productSlice.actions;
-export default productSlice.reducer;
+export const { resetBagStatusLoading, resetBagStatusError, resetBagStatusMessage } = bagSlice.actions;
+export default bagSlice.reducer;

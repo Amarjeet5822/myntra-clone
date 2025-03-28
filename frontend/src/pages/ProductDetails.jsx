@@ -1,22 +1,86 @@
-import React, { useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { IoHeartOutline } from "react-icons/io5"; // For the wishlist icon
 import { MdLocationOn } from "react-icons/md"; // For the delivery pincode icon
 import { FaCheckCircle } from "react-icons/fa"; // For the checkmark icon
 import { useParams } from "react-router-dom";
 import { useGetProductByIdQuery } from "../features/CreateApi/productApiSlice";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addToWishlist, resetWishlistError, resetWishlistMessage } from "../features/wishlistSlice";
+import { addToBag, resetBagStatusError, resetBagStatusMessage } from "../features/bagSlice";
+import { ProductDetailSection } from "../pages/index";
+import {  toast } from 'react-toastify';
 const ProductDetails = () => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [pincode, setPincode] = useState("272126");
+  const dispatch = useDispatch();
+  const { error: wishlistError, message: wishlistMessage } = useSelector(
+    (state) => state.wishlist
+  );
+  const { error: bagError, message: bagMessage } = useSelector(
+    (state) => state.bag
+  );
 
   // Sample product data (you can fetch this from an API)
   const { productId } = useParams();
   const { data: item, error, isLoading } = useGetProductByIdQuery(productId);
-
+  const Notify = (data) => toast(data);
   const handleSizeSelect = (size) => {
     setSelectedSize(size);
   };
+  const wishListHandler = (data) => {
+    // add Item to wishlist logic
+    console.log("Dispatching data to bag:", data); // ✅ Debugging ke liye
+    dispatch(
+      addToWishlist({
+        title: data.title,
+        product_id: item.product_id,
+        product_description: item.product_description,
+        rating: item.rating,
+        ratings_count: item.ratings_count,
+        initial_price: item.initial_price,
+        discount: item.discount,
+        final_price: item.final_price,
+        image: item.images[0],
+      })
+    );
+  };
+
+  const bagHandler = (data) => {
+    // add Item to bag logic
+    console.log("Dispatching item to bag:", data); // ✅ for Debugging
+    const newData = {
+      title: data.title,
+      product_id: data.product_id,
+      product_description: data.product_description,
+      rating: data.rating,
+      ratings_count: data.ratings_count,
+      initial_price: data.initial_price,
+      discount: data.discount,
+      final_price: data.final_price,
+      image: data.images[0],
+    };
+    console.log("Dipatching newData to bag: ", newData);
+    dispatch(addToBag(newData));
+  };
+  useEffect(() => {
+    if( wishlistError) {
+      Notify(wishlistError);
+      dispatch(resetWishlistError())
+    } 
+    if( wishlistMessage) {
+      Notify(wishlistMessage);
+      dispatch(resetWishlistMessage())
+    };
+    if(bagError){
+      Notify(bagError)
+      dispatch(resetBagStatusError())
+    };
+    if(bagMessage) {
+      Notify(bagMessage);
+      dispatch(resetBagStatusMessage());
+    }
+  }, [wishlistError, wishlistMessage, bagError, bagMessage]);
 
   if (isLoading) {
     return (
@@ -57,7 +121,6 @@ const ProductDetails = () => {
           {item.product_description}
         </Link>{" "}
       </div>
-
       {/* Main Product Section */}
       <div className="w-full flex flex-col md:flex-row gap-5 px-5 py-5 border-2 border-gray-200 my-5">
         {/* Product Image Section */}
@@ -65,8 +128,8 @@ const ProductDetails = () => {
           <div className="flex flex-wrap justify-items-start items-center gap-5 ">
             {item.images.map((product, idx) => (
               <div
+                key={`${item.product_id}-image-${idx}`}
                 className="w-[418px] h-[560px] overflow-hidden flex justify-center items-center"
-                key={idx}
               >
                 <img
                   src={`${product}`}
@@ -131,7 +194,7 @@ const ProductDetails = () => {
                 {[...new Map(item.sizes.map((s) => [s.size, s])).values()].map(
                   (sizeObj, index) => (
                     <button
-                      key={index}
+                      key={`${sizeObj.size}-${index}-${item.product_id}`}
                       onClick={() => handleSizeSelect(sizeObj.size)}
                       className={`w-10 h-10 rounded-full border flex items-center justify-center text-sm ${
                         selectedSize === sizeObj.size
@@ -158,10 +221,16 @@ const ProductDetails = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-3 mt-5">
-              <button className="bg-pink-500 text-white font-semibold py-3 px-5 rounded-lg flex-1 hover:bg-pink-600">
+              <button
+                onClick={() => bagHandler(item)}
+                className="bg-pink-500 text-white font-semibold py-3 px-5 rounded-lg flex-1 hover:bg-pink-600"
+              >
                 ADD TO BAG
               </button>
-              <button className="border border-gray-300 text-gray-700 font-semibold py-3 px-5 rounded-lg flex-1 hover:bg-gray-100 flex items-center justify-center gap-2">
+              <button
+                onClick={() => wishListHandler(item)}
+                className="border-2 border-gray-300 hover:border-gray-400 text-gray-600 font-semibold py-3 px-5 rounded-lg flex-1 hover:bg-gray-100 flex items-center justify-center gap-2"
+              >
                 <IoHeartOutline className="text-xl" />
                 WISHLIST
               </button>
@@ -192,8 +261,8 @@ const ProductDetails = () => {
               </div>
             </div>
             <div className="text-gray-800 font-bold py-5 flex flex-col gap-3">
-              {item.delivery_options.map((ele) => {
-                return <p>{ele}</p>;
+              {item.delivery_options.map((ele, idx) => {
+                return <p key={`${item.product_id}-delivery-${idx}`}>{ele}</p>;
               })}
             </div>
             <p className="">100% Original Products</p>
@@ -215,7 +284,7 @@ const ProductDetails = () => {
             </p>
             <div className="flex flex-col gap-3">
               {item.more_offers.map((ele, idx) => (
-                <div key={idx}>
+                <div key={`${item.product_id}-offer-${idx}`}>
                   <strong>{ele.offer_name}</strong>
                   <p className="font-normal">
                     <li>{ele.offer_value}</li>
@@ -231,11 +300,7 @@ const ProductDetails = () => {
             <div className="border-1 text-gray-200 my-5"> </div>
             <p className="font-medium py-2">PRODUCT DETAILS </p>
             <div>
-              {item.product_details.description.split(",").map((ele, idx) => (
-                <div>
-                  <p key={idx}>{ele.trim()}</p>
-                </div>
-              ))}
+              <ProductDetailSection item={item} />
             </div>
           </div>
         </div>

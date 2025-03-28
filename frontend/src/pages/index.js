@@ -22,9 +22,10 @@ import ProductPage from "./Products/ProductPage";
 import AccountNavSignin from "./DropDownHover/AccountNavSignin";
 import LoginPage from "./LoginPage";
 import OTPLogin from "./OTPLogin";
-
+import ProductDetailSection from "./profile/ProductDetailSection";
 export {
   Home,
+  ProductDetailSection,
   Bag,
   ContactUs,
   ErrorPage,

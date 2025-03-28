@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../features/authSlice";
@@ -68,9 +67,11 @@ const AccountNavSignin = () => {
             <Link to="/profile">
               <li className="p-account">Edit Profile</li>
             </Link>
-            <li className="p-account">
-              <button onClick={LogoutHandler}>Logout</button>
-            </li>
+              <button  onClick={LogoutHandler}>
+              <li className="text-sm mb-2 text-gray-600 hover:text-gray-900 hover:font-bold cursor-pointer ">Logout
+              </li>
+              </button>
+            
           </ul>
         ) : (
           <div></div>

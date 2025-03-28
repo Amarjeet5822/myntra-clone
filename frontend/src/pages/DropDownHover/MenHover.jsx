@@ -73,7 +73,7 @@ const MenHover = () => {
                       {subcategory.items.map((item, idx) => (
                         <li key={idx} className="my-1">
                           <Link
-                            to="#"
+                            to="/product"
                             className=" text-sm font-normal hover:font-bold"
                           >
                             {item}
