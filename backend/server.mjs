@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import routes from "./routes/indexRoute.mjs";
 import connectDB from "./config/dbConnection.mjs";
 import AppError from "./utils/AppError.mjs";
+
 dotenv.config();
 
 const app = express();
@@ -14,8 +15,8 @@ app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 
-// const cookieParserSecret = process.env.SECRET_KEY;
-// app.use(cookieParser(cookieParserSecret));
+const cookieParserSecret = process.env.SECRET_KEY;
+app.use(cookieParser(cookieParserSecret));
 
 const whitelist = [process.env.FE_URL, process.env.DEPLOY_FE_URL];
 
@@ -35,13 +36,14 @@ app.use(cors(corsOptionsDelegate));
 
 app.use(routes);
 
-app.all("*", (req, res) => {
+
+app.all("*", (req, res, next) => {
   next(new AppError(404, `Can't find ${req.originalUrl} on this server!`));
 })
 
 // ✅ Global Error Handling Middleware
 app.use((err, req, res, next) => {
-  err.logError(); // Log error details
+  // err.logError(); // Log error details
   res.status(err.statusCode || 500).json({
     status: err.status,
     message: err.message,

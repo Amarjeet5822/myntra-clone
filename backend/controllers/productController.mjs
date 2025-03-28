@@ -4,7 +4,7 @@ import AppError from "../utils/AppError.mjs";
 const getProducts = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 40; // Default 50 products per request
+    const limit = parseInt(req.query.limit) || 28; // Default 50 products per request
     const skip = (page - 1) * limit;
 
     const products = await Product.find().skip(skip).limit(limit);

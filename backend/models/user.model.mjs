@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  mobileNumber:{ type:String, unique: true, required: true },
+  number:{ type:String, unique: true, required: true },
+  name: {type: String, required: true },
   password: {type: String, default: "" },
   profiles: {
-    fullName: {type: String, default: "" },
     email: {type: String, default: "" },
     gender: {type: String, enum: ["Male", "Female"], default: null },
     dob: {type: String, default:null },
