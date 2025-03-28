@@ -21,8 +21,31 @@ import MenTshirts from "./Products/MenTshirts";
 import ProductPage from "./Products/ProductPage";
 import AccountNavSignin from "./DropDownHover/AccountNavSignin";
 import LoginPage from "./LoginPage";
+import OTPLogin from "./OTPLogin";
+
 export {
-  Home, Bag, ContactUs, ErrorPage, GiftCard, Profile, Wishlist, Orders, Overview, SavedCards, Coupons, Addresses, ProductDetails,
-  CheckoutAddressPayment, CheckoutAddress, MenHover, MenCasualShirts, MenFormalShirts, MenSweatShirts, MenTshirts, ProductPage, AccountNavSignin,
-  LoginPage
+  Home,
+  Bag,
+  ContactUs,
+  ErrorPage,
+  GiftCard,
+  Profile,
+  Wishlist,
+  Orders,
+  Overview,
+  SavedCards,
+  Coupons,
+  Addresses,
+  ProductDetails,
+  CheckoutAddressPayment,
+  CheckoutAddress,
+  MenHover,
+  MenCasualShirts,
+  MenFormalShirts,
+  MenSweatShirts,
+  MenTshirts,
+  ProductPage,
+  AccountNavSignin,
+  LoginPage,
+  OTPLogin,
 };

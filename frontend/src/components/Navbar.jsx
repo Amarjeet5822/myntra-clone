@@ -1,12 +1,14 @@
 import { Link } from "react-router-dom";
 import { CiSearch } from "react-icons/ci";
 import { IoMdHeartEmpty } from "react-icons/io";
-import { useState } from "react";
+import {  useState } from "react";
 import { AccountNavSignin, MenHover } from "../pages/index";
+import { useSelector } from "react-redux";
 
 export default function Navbar() {
   const [isMen, setIsMen] = useState(null);
   const [isAccount, setIsAccount] = useState(null);
+  const { isAuthenticated, name } = useSelector(state => state.authUser.isUser);
 
   return (
     <nav className=" sticky top-0 z-50 bg-white w-full">

@@ -1,12 +1,23 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, {  useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage() {
-  const [number, setNubmer] = useState("");
-  const [name, setName] = useState("");
+  const [isContinue, setIsContinue ] = useState(true);
+  const navigate = useNavigate();
+  const mobileRef = useRef(null);
 
+  const handleInput = () => {
+    const inp = mobileRef.current.value 
+    if (inp && inp.length > 9) {
+      setIsContinue(false);
+    }else{
+      setIsContinue(true)
+    }
+  }
   const handleLogin = () => {
-    // need logic
+    setIsContinue(true);
+    let number = mobileRef.current.value;
+    navigate("/login/otp-login", { state : { number }})
   }
   return (
     <div className="flex justify-center min-h-screen items-center w-full bg-[#fdeeec]">
@@ -26,43 +37,28 @@ function LoginPage() {
           <div className="w-full flex border-2 border-gray-400 hover:border-black mb-5 relative ">
             <span className="text-gray-700 border-r-2 border-gray-400 my-2 px-2"> +91</span>
             <input
-              value={number}
+              ref={mobileRef}
               className="px-2 outline-none "
               type="text"
-              onChange={(e) => setNubmer(e.target.value)}
+              onChange={handleInput}
+              maxLength={10}
               placeholder = "Moble Number"
             />
             <div>
              {
-              !number &&
+              !mobileRef &&
             <span className="absolute text-red-600 top-2 right-[206px]">*</span>
-             }
-            </div>
-          </div>
-          <div className="w-full flex border-2 border-gray-400 hover:border-black mb-5 p-2 relative ">
-           
-            <input
-              value={name}
-              className="px-2 outline-none "
-              type="text"
-              onChange={(e) => setName(e.target.value)}
-              placeholder = "Enter Your Name"
-            />
-            <div>
-             {
-              !name &&
-            <span className="absolute text-red-600 top-2 right-[234px]">*</span>
              }
             </div>
           </div>
           <div className="w-full mb-2">
             <p className="text-sm">
               By continuing, I agree to the{" "}
-              <Link href="#" className="text-pink-400 font-bold">
+              <Link to="#" className="text-pink-400 font-bold">
                 Terms of Use
               </Link>{" "}
               &{" "}
-              <Link href="#" className="text-pink-400 font-bold">
+              <Link to="#" className="text-pink-400 font-bold">
                 Privacy Policy
               </Link>
             </p>
@@ -70,12 +66,13 @@ function LoginPage() {
 
           <button 
           onClick={ handleLogin}
-          className="bg-red-600 text-white border-none p-2 my-3 font-bold rounded cursor-pointer hover:bg-red-700">
+          disabled={isContinue}
+          className={`${isContinue? "bg-gray-300" : "bg-red-600 hover:bg-red-700"} text-white border-none p-2 my-3 font-bold rounded cursor-pointer `}>
             CONTINUE
           </button>
           <p className="text-sm mt-2">
             Have trouble logging in?{" "}
-            <Link href="#" className="text-pink-400 font-bold">
+            <Link to="#" className="text-pink-400 font-bold">
               Get help
             </Link>
           </p>

@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { api } from "../utils/backendApi";
+
 // First, create the thunk ( Login User)
 export const loginUser = createAsyncThunk(
   "authUser/loginUser",
-  async ({ email, pass }, { rejectWithValue }) => {
+  async ({ number, name }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${api}/users/login`,
-        { email, pass },
+        `${api}/auth/login`,
+        { number, name },
         { withCredentials: true }
       );
       return response.data;
@@ -18,29 +19,14 @@ export const loginUser = createAsyncThunk(
   
   }
 );
-// Register User
-export const registerUser = createAsyncThunk(
-  "authUser/registerUser",
-  async ({email, pass, name},{ rejectWithValue }) => {
-    try {
-      const response = await axios.post(
-        `${api}/users/register`,
-        { name, email, pass },
-        { withCredentials: true, }
-      );
-      return response.data;
-    } catch (error) {
-      return rejectWithValue(error.response?.data || "failed register!")
-    }
-  }
-);
+
 // Logout User
 export const logoutUser = createAsyncThunk(
   "authUser/logoutUser",
   async ( _,{ rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${api}/users/logout`,
+        `${api}/auth/logout`,
         {},
         { withCredentials: true, }
       );
@@ -50,27 +36,27 @@ export const logoutUser = createAsyncThunk(
     }
   }
 );
-// Delete User
-export const deleteUser = createAsyncThunk(
-  "authUser/deleteUser",
+// Get User
+export const getUser = createAsyncThunk(
+  "authUser/getUser",
   async ( _,{ rejectWithValue }) => {
     try {
-      const response = await axios.delete(
-        `${api}/users`,
+      const response = await axios.get(
+        `${api}/auth`,
         { withCredentials: true, }
       );
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data || "failed to Delete!")
+      return rejectWithValue(error.response?.data || "failed to get User!")
     }
   }
 );
 
 const initialState = {
-  isLogged: JSON.parse(localStorage.getItem("isLogged")) || false,
+  isUser: {isAuthenticated:false, name:""},
+  data: null,
   loading: false,
   error: null,
-  data: null,
   success: false
 };
 
@@ -81,72 +67,53 @@ const authUserSlice = createSlice({
     resetState : (state) => {
       state.loading = false;
       state.error = null;
-      state.data = null;
       state.success = false;
     },
   },
   extraReducers: (builder) => {
+    // Handle Pending State 
+    const handlePending = ( state ) => {
+      state.loading = true;
+      state.success = false;
+      state.error = null;
+    }
+    // Handle rejected state
+    const handleRejected = (state, action ) => {
+      state.loading = false;
+      state.success = false;
+      state.error = action.payload?.data;
+    }
     // Login builder
-    builder.addCase(loginUser.pending, (state) => {
-      state.loading = true;
-      state.success = false;
-      state.data = null;
-      state.error = null
-    });
-    builder.addCase(loginUser.fulfilled, (state, action) => {
-      localStorage.setItem("isLogged", true);
-      state.isLogged = true;
+    builder
+    .addCase(loginUser.pending, handlePending )
+    .addCase(loginUser.fulfilled, (state, action) => {
+      state.isUser = action.payload;
       state.loading = false;
       state.success = true;
       state.error = null
-      state.data = action.payload;
-    });
-    builder.addCase(loginUser.rejected, (state, action) => {
-      state.loading = false;
-      state.success = false;
-      state.data = null;
-      state.error = action.payload || "failed login!";
-    });
-    // Register builder
-    builder.addCase(registerUser.pending, (state) => {
-      state.loading = true;
-      state.data = null;
-      state.success = false;
-      state.error = null;
-    });
-    builder.addCase(registerUser.fulfilled, (state, action) => {
-      state.loading = false;
-      state.success = true;
-      state.data = action.payload;
-      state.error = null;
-    });
-    builder.addCase(registerUser.rejected, (state, action ) => {
-      state.loading = false;
-      state.success = false;
-      state.error = action.payload || "failed register!"
-    });
-    // Logout builder
-    // builder.addCase(logoutUser.pending, (state) => {
-    //   state.loading = true;
-    //   state.error = null;
-    //   state.success = false;
-    //   state.data = null
-    // });
-    builder.addCase(logoutUser.fulfilled, (state, action) => {
-      localStorage.removeItem("isLogged");
-      state.isLogged = false;
-    
-    });
-    // builder.addCase(logoutUser.rejected, (state, action) => {
-    //   state.loading = false;
-    //   state.error = action.payload || "failed logout!";
-    // })
-    // Delete builder
-    builder.addCase(deleteUser.fulfilled, (state) => {
-      localStorage.removeItem("isLogged");
-      state.isLogged = false;
-    });
+    })
+    .addCase(loginUser.rejected, handleRejected);
 
+    // Register builder
+    builder.addCase(getUser.pending, handlePending)
+    .addCase(getUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.data = action.payload;
+      state.error = null;
+    });
+    builder.addCase(getUser.rejected, handleRejected);
+
+    // Logout builder
+    builder.addCase(logoutUser.pending, handlePending)
+    .addCase(logoutUser.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+      state.isUser = null
+      state.data = null;
+      state.error = null;
+    });
+    builder.addCase(logoutUser.rejected, handleRejected);
 
   },
 });

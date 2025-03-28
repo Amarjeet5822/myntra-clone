@@ -18,6 +18,7 @@ import {
   MenSweatShirts,
   MenTshirts,
   Orders,
+  OTPLogin,
   Overview,
   ProductDetails,
   ProductPage,
@@ -38,6 +39,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/login", element: <LoginPage /> },
+      { path: "/login/otp-login", element: <OTPLogin /> },
       { path: "/wishlist", element: <Wishlist /> },
       { path: "/product", element: <ProductPage /> },
       { path: "/product/:productId", element: <ProductDetails /> },
