@@ -1,11 +1,11 @@
-import React, {  useRef, useState } from "react";
+import React, {  useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function LoginPage() {
   const [isContinue, setIsContinue ] = useState(true);
   const navigate = useNavigate();
   const mobileRef = useRef(null);
-
+  const { isUser } = useSelector((state) => state.authUser);
   const handleInput = () => {
     const inp = mobileRef.current.value 
     if (inp && inp.length > 9) {
@@ -19,6 +19,11 @@ function LoginPage() {
     let number = mobileRef.current.value;
     navigate("/login/otp-login", { state : { number }})
   }
+  useEffect(() => {
+    if(isUser.isAuthenticated) {
+      navigate("/")
+    }
+  },[isUser.isAuthenticated])
   return (
     <div className="flex justify-center min-h-screen items-center w-full bg-[#fdeeec]">
       <div className="w-[450px] flex flex-col min-h-screen mt-8 bg-white">

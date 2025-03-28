@@ -94,11 +94,12 @@ const authUserSlice = createSlice({
     })
     .addCase(loginUser.rejected, handleRejected);
 
-    // Register builder
+    // get User
     builder.addCase(getUser.pending, handlePending)
     .addCase(getUser.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
+      state.isUser.isAuthenticated = true;
       state.data = action.payload;
       state.error = null;
     });
@@ -109,7 +110,7 @@ const authUserSlice = createSlice({
     .addCase(logoutUser.fulfilled, (state) => {
       state.loading = false;
       state.success = true;
-      state.isUser = null
+      state.isUser.isAuthenticated = false;
       state.data = null;
       state.error = null;
     });

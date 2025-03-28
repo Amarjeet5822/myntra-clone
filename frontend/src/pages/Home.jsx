@@ -1,8 +1,19 @@
-import React from "react";
-import { DoubleImage, GridSlider, LandingImage, SingleImage } from "../components/index";
-
+import React, { useEffect } from "react";
+import {
+  DoubleImage,
+  GridSlider,
+  LandingImage,
+  SingleImage,
+} from "../components/index";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../features/authSlice";
 
 function Home() {
+  const dispatch = useDispatch();
+  const { isUser, data } = useSelector((state) => state.authUser);
+  useEffect(() => {
+    dispatch(getUser());
+  }, [isUser.isAuthenticated]);
   return (
     <>
       <div className="max-w-7xl mx-auto flex flex-col gap-3 cursor-pointer">
@@ -102,8 +113,10 @@ function Home() {
             ]}
             imgAlt="cloths"
           />
-          <SingleImage imgUrl="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2025/3/20/a1a514a5-cdea-48e4-9bf4-4ee267587fd11742465000276-App-Install-Banner.jpg"
-          imgAlt="download_myntra" />
+          <SingleImage
+            imgUrl="https://assets.myntassets.com/f_webp,w_980,c_limit,fl_progressive,dpr_2.0/assets/images/2025/3/20/a1a514a5-cdea-48e4-9bf4-4ee267587fd11742465000276-App-Install-Banner.jpg"
+            imgAlt="download_myntra"
+          />
         </div>
       </div>
     </>
