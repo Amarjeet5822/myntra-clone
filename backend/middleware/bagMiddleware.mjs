@@ -5,7 +5,7 @@ const bagMiddleware = async (req, res, next ) => {
   try {
     // console.log("req.body in bagMiddle" , req.body)
     const { product_id } = req.body || {};
-    // console.log("reaching or not")
+    console.log("reaching or not (porduct_id)", product_id)
     const product = await Bag.findOne({product_id});
     if(product) {
       return res.status(409).json({message: "Product Already Added"})

@@ -14,4 +14,4 @@ routes.use( "/api/product", productRoute );
 routes.use("/api/bag", IsUserAuthenticated, bagRoute );
 routes.use("/api/wishlist", IsUserAuthenticated, wishlistRoute  );
 
-export default routes
+export default routes;

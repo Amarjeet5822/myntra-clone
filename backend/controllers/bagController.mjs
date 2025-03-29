@@ -15,10 +15,10 @@ const addProductBag = async (req, res, next) => {
   // console.log("userId :", userId);
   // console.log("addProductBag, req.body: ", req.body);
   try {
-    // console.log("db bag before save")
+    console.log("db bag before save")
     const product = new Bag({ userId, ...req.body });
     await product.save();
-    // console.log("db bag after save")
+    console.log("db bag after save")
     res.status(201).json({ message: "Added To Bag" });
   } catch (error) {
     // console.log("error not save in db throw error: ", error)
