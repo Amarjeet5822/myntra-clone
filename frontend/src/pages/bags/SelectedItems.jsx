@@ -10,29 +10,24 @@ const SelectedItems = ({ items }) => {
         {items.map((item) => (
           <div
             className="border border-gray-300 p-4 rounded flex"
-            key={item.id}
+            key={item._id}
           >
             <img
-              src={item.imageUrl}
-              alt={item.name}
+              src={item.image}
+              alt={item.title}
               className="w-24 h-24 object-cover"
             />
             <div className="ml-4">
-              <h3 className="text-lg font-medium">{item.name}</h3>
-              <p className="text-sm text-gray-600">{item.description}</p>
-              <p className="text-sm">Size: {item.size}</p>
+              <h3 className="text-lg font-medium">{item.title}</h3>
+              <p className="text-sm text-gray-600">
+                {item.product_description}
+              </p>
               <p className="text-sm">Qty: {item.quantity}</p>
               <p className="text-sm font-semibold">
-                Price: ₹{item.price}{" "}
+                Price: ₹{item.final_price}{" "}
                 <span className="text-red-500">{item.discount}</span>
-              </p>
-              <p className="text-sm text-gray-500">{item.returnPolicy}</p>
-              <p className="text-sm text-gray-500">
-                Delivery by {item.deliveryDate}
-              </p>
-              {item.stock && (
-                <p className="text-sm text-red-500">{item.stock}</p>
-              )}
+              </p>           
+              <p className="text-sm text-red-500">145</p>
             </div>
           </div>
         ))}

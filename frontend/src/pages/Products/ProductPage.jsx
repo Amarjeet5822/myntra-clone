@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useGetProductsQuery } from "../../features/CreateApi/productApiSlice";
 import { useNavigate } from "react-router-dom";
 import { useGetFilteredProductsQuery } from "../../features/CreateApi/filterApiSlice";
@@ -12,22 +12,24 @@ const ProductPage = () => {
     maxPrice: undefined,
   });
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(localStorage.getItem("currentPage") ? Number(localStorage.getItem("currentPage")) : 1);
+  const  [totalPages, setTotalPages ] = useState(1000)
   // Fetch default products
-  const { data: products, error, isLoading } = useGetProductsQuery();
-
+  const { data: products, error, isLoading } = useGetProductsQuery(currentPage);
+  
   // Fetch filtered products if filters are applied
   const { data: filteredProducts } = useGetFilteredProductsQuery(filters, {
     skip:
-      !filters.category &&
-      !filters.brand &&
+    !filters.category &&
+    !filters.brand &&
       !filters.color &&
       filters.minPrice === undefined &&
       filters.maxPrice === undefined,
-  });
-
-  // Final product list (filtered if filters applied, else default)
+    });
+    
+    // Final product list (filtered if filters applied, else default)
   const displayedProducts = filteredProducts || products;
-
+  
   // Handle filter changes
   const applyFilter = (newFilters) => {
     setFilters((prevFilters) => ({
@@ -35,20 +37,27 @@ const ProductPage = () => {
       ...newFilters,
     }));
   };
+  
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+      localStorage.setItem("currentPage", newPage);
+    }
+  };
   const handleProductClick = (productId) => {
     navigate(`/product/${productId}`);
   };
   if (isLoading) {
     return (
       <div className="text-2xl flex min-h-96 justify-center items-center font-bold">
-        <p className="text-center font-bold">Loading products...</p>
+        <p className="text-center font-bold">Loading Products...</p>
       </div>
     );
   }
   if (error) {
     return (
       <div className="text-2xl min-h-96 flex justify-center items-center font-bold">
-        <p className="text-center">Error fetching products</p>
+        <p className="text-center">Error fetching Products</p>
       </div>
     );
   }
@@ -140,6 +149,39 @@ const ProductPage = () => {
 
       {/* Product Grid */}
       <div className="w-full sm:w-[75%] md:w-[80%] lg:w-[85%] p-4">
+      <div className="flex justify-center items-center p-3">
+          <button
+            className="px-3 py-1 border border-gray-300 rounded mx-1 text-gray-700 hover:bg-gray-200"
+            onClick={() => handlePageChange(1)}
+            disabled={currentPage === 1}
+          >
+            &laquo;
+          </button>
+          <button
+            className="px-3 py-1 border border-gray-300 rounded mx-1 text-gray-700 hover:bg-gray-200"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="mx-3 text-gray-600">
+            Page {currentPage} of { totalPages }
+          </span>
+          <button
+            className="px-3 py-1 border border-gray-300 rounded mx-1 text-gray-700 hover:bg-gray-200"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+          <button
+            className="px-3 py-1 border border-gray-300 rounded mx-1 text-gray-700 hover:bg-gray-200"
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            &raquo;
+          </button>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 ">
           {displayedProducts?.map((item) => (
             <div key={item.product_id} className=" p-4 cursor-pointer">
@@ -166,6 +208,39 @@ const ProductPage = () => {
               </div>
             </div>
           ))}
+        </div>
+        <div className="flex justify-center items-center p-3">
+          <button
+            className="px-3 py-1 border border-gray-300 rounded mx-1 text-gray-700 hover:bg-gray-200"
+            onClick={() => handlePageChange(1)}
+            disabled={currentPage === 1}
+          >
+            &laquo;
+          </button>
+          <button
+            className="px-3 py-1 border border-gray-300 rounded mx-1 text-gray-700 hover:bg-gray-200"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span className="mx-3 text-gray-600">
+            Page {currentPage} of { totalPages }
+          </span>
+          <button
+            className="px-3 py-1 border border-gray-300 rounded mx-1 text-gray-700 hover:bg-gray-200"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+          <button
+            className="px-3 py-1 border border-gray-300 rounded mx-1 text-gray-700 hover:bg-gray-200"
+            onClick={() => handlePageChange(totalPages)}
+            disabled={currentPage === totalPages}
+          >
+            &raquo;
+          </button>
         </div>
       </div>
     </div>

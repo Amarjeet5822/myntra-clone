@@ -23,7 +23,7 @@ const Bag = () => {
 
   return (
     <div className="px-5 w-5xl mx-auto flex h-full  border min-h-10  border-gray-200 rounded">
-      <div className="w-[60%] mt-10 h-full pr-4 flex flex-col ">
+      <div className="w-[60%] mt-10 h-full pr-4 flex flex-col border-r-2 border-gray-200 ">
         <div className="mb-5 border border-gray-200 p-2  flex justify-between items-center">
           <div>
             <h3>Deliver To:</h3>
@@ -50,7 +50,7 @@ const Bag = () => {
         <div>{<SelectedItems items={items} />}</div>
       </div>
       {/* {right Side} */}
-      <div className="w-[40%] border-l-2 mt-10 pl-4 h-full border-gray-200  ">
+      <div className="w-[40%] mt-10 pl-4 h-full  ">
         <div className="mb-5 ">
           <h4>Coupons</h4>
           <input

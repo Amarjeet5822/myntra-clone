@@ -71,7 +71,7 @@ export default function Navbar() {
               </div>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <Link to="/cart">
+              <Link to="/wishlist">
                 <div className=" cursor-pointer text-xl flex justify-center items-center">
                   <IoMdHeartEmpty />
                 </div>
