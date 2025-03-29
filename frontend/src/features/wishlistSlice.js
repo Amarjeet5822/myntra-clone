@@ -21,36 +21,12 @@ export const getWishlist = createAsyncThunk(
 // Add to Wishlist
 export const addToWishlist = createAsyncThunk(
   "wishlist/addToWishlist",
-  async (
-    {
-      product_id,
-      product_description,
-      rating,
-      ratings_count,
-      initial_price,
-      discount,
-      final_price,
-      sizes,
-      image,
-    },
-    { rejectWithValue }
-  ) => {
+  async (item, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${api}/bag`,
-        {
-          product_id,
-          product_description,
-          rating,
-          ratings_count,
-          initial_price,
-          discount,
-          final_price,
-          sizes,
-          image,
-        },
-        { withCredentials: true }
-      );
+      const response = await axios.post(`${api}/bag`, item, {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      });
       return response.data;
     } catch (error) {
       return rejectWithValue(
@@ -116,6 +92,7 @@ const wishlistSlice = createSlice({
       .addCase(getWishlist.fulfilled, (state, action) => {
         state.loading = false;
         state.message = null;
+        state.error = null
         state.data = action.payload;
       })
       .addCase(getWishlist.rejected, handleRejected);
@@ -134,11 +111,14 @@ const wishlistSlice = createSlice({
       .addCase(deleteWishlistById.fulfilled, (state, action) => {
         state.loading = false;
         state.message = action.payload;
-        state.error = null;
       })
       .addCase(deleteWishlistById.rejected, handleRejected);
   },
 });
 
-export const { resetWishlistLoading, resetWishlistError, resetWishlistMessage } = wishlistSlice.actions;
+export const {
+  resetWishlistLoading,
+  resetWishlistError,
+  resetWishlistMessage,
+} = wishlistSlice.actions;
 export default wishlistSlice.reducer;

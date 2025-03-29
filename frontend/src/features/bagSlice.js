@@ -22,15 +22,12 @@ export const getBags = createAsyncThunk(
 export const addToBag = createAsyncThunk(
   "bag/addToBag",
   async (item, { rejectWithValue }) => {
-    console.log("item ( addToBag ) : ", item)
+    // console.log("item ( addToBag ) : ", item)
     try {
-      const response = await axios.post(
-        `${api}/bag`,
-        item,
-        { withCredentials: true, 
-          headers: { "Content-Type": "application/json" },
-         }
-      );
+      const response = await axios.post(`${api}/bag`, item, {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      });
       // console.log("addToBag response.data : ", response.data )
       return response.data;
     } catch (error) {
@@ -77,7 +74,6 @@ const bagSlice = createSlice({
     resetBagStatusMessage: (state) => {
       state.message = null;
     },
-    
   },
   extraReducers: (builder) => {
     // Handle Pending State
@@ -89,7 +85,6 @@ const bagSlice = createSlice({
     // Handle rejected state
     const handleRejected = (state, action) => {
       state.loading = false;
-      state.message = null;
       state.error = action.payload;
     };
     // Get all products from Bag
@@ -97,7 +92,6 @@ const bagSlice = createSlice({
       .addCase(getBags.pending, handlePending)
       .addCase(getBags.fulfilled, (state, action) => {
         state.loading = false;
-        state.message = null;
         state.data = action.payload;
       })
       .addCase(getBags.rejected, handleRejected);
@@ -108,7 +102,6 @@ const bagSlice = createSlice({
         state.loading = false;
         console.log("✅ Action Fulfilled Payload:", action.payload);
         state.message = action.payload;
-        state.error = null;
       })
       .addCase(addToBag.rejected, handleRejected);
 
@@ -118,11 +111,14 @@ const bagSlice = createSlice({
       .addCase(deleteBagById.fulfilled, (state, action) => {
         state.loading = false;
         state.message = action.payload;
-        state.error = null;
       })
       .addCase(deleteBagById.rejected, handleRejected);
   },
 });
 
-export const { resetBagStatusLoading, resetBagStatusError, resetBagStatusMessage } = bagSlice.actions;
+export const {
+  resetBagStatusLoading,
+  resetBagStatusError,
+  resetBagStatusMessage,
+} = bagSlice.actions;
 export default bagSlice.reducer;

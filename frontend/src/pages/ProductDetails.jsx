@@ -85,16 +85,16 @@ const ProductDetails = () => {
   if (isLoading) {
     return (
       <div className="text-2xl flex justify-center items-center font-bold">
-        <p className="text-center font-bold">Loading Products...</p>;
+        <p className="text-center font-bold">Loading Products...</p>
       </div>
-    );
+    )
   }
   if (error) {
     return (
       <div className="text-2xl flex justify-center items-center font-bold">
         <p className="text-center">Error fetching Products</p>
       </div>
-    );
+    )
   }
   console.log("line36(productDetails) ", item);
   return (
