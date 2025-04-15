@@ -35,7 +35,7 @@ A scalable full-stack **e-commerce web application** inspired by **Myntra**, bui
 ## 📸 Screenshots
 
 > ![alt text](image.png)
-> ![alt text](image.png)
+> ![alt text](image1.png)
 
 ---
 
